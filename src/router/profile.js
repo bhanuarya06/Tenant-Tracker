@@ -2,7 +2,7 @@ const express = require('express');
 const profileRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const { ownerModel } = require('../schema/owner');
-const { authenticate } = require('../utils/authenticate');
+const { authenticate } = require('../middlewares/authenticate');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 
