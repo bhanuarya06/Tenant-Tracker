@@ -1,14 +1,14 @@
 const express = require('express');
-const authRouter = express.Router();
+const ownerAuthRouter = express.Router();
 const bcrypt = require('bcrypt');
-const { ownerModel } = require('../schema/owner')
+const { ownerModel } = require('../../schema/owner')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser'); // Add cookie-parser middleware
-const {validateOwner, validateOwnerLoginDetails} = require('../utils/validate');
+const {validateOwner, validateOwnerLoginDetails} = require('../../utils/validate');
 
-authRouter.use(cookieParser());
+ownerAuthRouter.use(cookieParser());
 
-authRouter.post('/signUp', async (req, res) => {
+ownerAuthRouter.post('/signUp', async (req, res) => {
     try {
         const user = req.body;
         validateOwner(user);
@@ -29,13 +29,13 @@ authRouter.post('/signUp', async (req, res) => {
         if (!loginUser) {
             return res.status(400).send("Something went wrong");
         }
-        res.status(200).end("Onwer Info Added Succesfully");
+        res.status(200).json(owner);
     } catch (err) {
         res.send("ERROR : " + err);
     }
 });
 
-authRouter.post('/login', async (req, res) => {
+ownerAuthRouter.post('/login', async (req, res) => {
     try {
         const user = req.body;
         validateOwnerLoginDetails(user);
@@ -53,17 +53,12 @@ authRouter.post('/login', async (req, res) => {
             return res.status(400).send("invalid credentials");
         }
         const token = await jwt.sign({_id:loginUser._id}, "Minote3#");
-        res.cookie('token', token)
-        res.status(200).send("Login Successfull")
+        res.cookie("token", token);
+        res.status(200).send(loginUser)
 
     } catch (err) {
         res.send("ERROR : " + err);
     }
 });
 
-authRouter.post('/logout',(req,res)=>{
-    res.clearCookie('token');
-    res.status(200).send("Logout successfull")
-})
-
-module.exports = { authRouter }
+module.exports = { ownerAuthRouter }

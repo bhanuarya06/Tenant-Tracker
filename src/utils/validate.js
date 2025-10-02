@@ -1,5 +1,4 @@
 const validate = require('validator');
-const { ownerModel } = require('../schema/owner');
 
 const validateOwner = function (owner){
     if (owner.firstName?.length < 3 || owner.firstName?.length > 12 ){
@@ -28,4 +27,33 @@ const validateOwnerLoginDetails = function (owner){
     }
 }
 
-module.exports = {validateOwner, validateOwnerLoginDetails}
+
+const validateTenant = function (tenant){
+    if (tenant.firstName?.length < 3 || tenant.firstName?.length > 12 ){
+        throw new Error("FirstName must be between 3 to 12 characters")
+    }
+    if (tenant.lastName?.length < 3 || tenant.lastName?.length > 12 ){
+        throw new Error("Lastname must be between 3 to 12 characters")
+    }
+    if (tenant.occupation?.length < 3 || tenant.occupation?.length > 12 ){
+        throw new Error("Address must be between 3 to 12 characters")
+    }
+    if (tenant.bio?.length > 150 ){
+        throw new Error("Lastname must be less than 50 characters")
+    }
+    if (!validate.isEmail(tenant.email)){
+        throw new Error("Email is invalid");
+    }
+    if (!validate.isStrongPassword(tenant.password)){
+        throw new Error("Password is weak");
+    }
+}
+
+
+const validateTenantLoginDetails = function (tenant){
+    if (!validate.isEmail(tenant.email)){
+        throw new Error("Email is invalid");
+    }
+}
+
+module.exports = {validateOwner, validateOwnerLoginDetails, validateTenant, validateTenantLoginDetails}

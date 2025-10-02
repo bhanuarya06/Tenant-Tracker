@@ -17,6 +17,7 @@ const owner = new Schema({
     },
     email: {
         type: String,
+        unique:true,
         required: true
     },
     mobile: {

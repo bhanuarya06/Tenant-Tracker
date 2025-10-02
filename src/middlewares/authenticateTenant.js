@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
-const { ownerModel } = require('../schema/owner');
+const { tenantModel } = require('../schema/tenant');
 
-const authenticate = async (req, res, next) => {
+const tenantAuth = async (req, res, next) => {
     try {
         const { token } = req.cookies
         if (!token) {
@@ -9,15 +9,15 @@ const authenticate = async (req, res, next) => {
         }
         const decodedValue = jwt.verify(token, "Minote3#");
         const { _id } = decodedValue;
-        const owner = await ownerModel.findOne({ _id: _id })
-        if (!owner) {
-            return res.status(401).send("Owner not found");
+        const tenant = await tenantModel.findOne({ _id: _id })
+        if (!tenant) {
+            return res.status(401).send("tenant not found");
         }
-        req.owner = owner
+        req.tenant = tenant
         next();
     } catch (err) {
         res.status(401).send("Error : ", err.message)
     }
 }
 
-module.exports = { authenticate }
+module.exports = { tenantAuth }

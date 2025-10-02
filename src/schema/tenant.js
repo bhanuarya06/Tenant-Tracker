@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ownerModel } = require('./owner');
 const { Schema } = mongoose
 
 const tenant = new Schema({
@@ -11,13 +12,13 @@ const tenant = new Schema({
     },
     dob: {
         type: Date,
-        required: true
     },
-    gender:{
-        type:String
+    gender: {
+        type: String
     },
     email: {
         type: String,
+        unique : true,
         required: true
     },
     mobile: {
@@ -25,6 +26,20 @@ const tenant = new Schema({
     },
     ocupation: {
         type: String
+    },
+    bio: {
+        type: String
+    },
+    password: {
+        type: String
+    },
+    roomNum:{
+        type: String,
+        required: true
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: ownerModel
     }
 }, {
     timestamps: true

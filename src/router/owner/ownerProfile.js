@@ -1,24 +1,15 @@
 const express = require('express');
-const profileRouter = express.Router();
-const jwt = require('jsonwebtoken');
-const { ownerModel } = require('../schema/owner');
-const { authenticate } = require('../middlewares/authenticate');
+const ownerProfileRouter = express.Router();
+const { ownerModel } = require('../../schema/owner');
+const { ownerAuth } = require('../../middlewares/authenticateOwner');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+const cookieParser = require('cookie-parser');
 
-profileRouter.use(authenticate);
-
-profileRouter.get('/profile/view', async (req, res) => {
+ownerProfileRouter.use(cookieParser());
+ownerProfileRouter.get('/view', ownerAuth, async (req, res) => {
     try {
-        const { token } = req.cookies;
-        if (!token) {
-            res.status(401).end("login to access")
-        }
-        const decodeobje = await jwt.verify(token, "Minote3#")
-        const { _id } = decodeobje
-        const user = await ownerModel.findOne({ _id: _id })
-        res.owner = user
-        req.owner = user
+        const user = req.owner
         res.json({
             "message": "Welcome " + user.firstName,
             OwnerInfo: user
@@ -28,9 +19,9 @@ profileRouter.get('/profile/view', async (req, res) => {
     }
 });
 
-profileRouter.patch('/profile/edit', async (req, res) => {
+ownerProfileRouter.put('/edit', ownerAuth, async (req, res) => {
     try {
-        const editableFields = ['gender', 'age', 'address', 'email', 'bio'];
+        const editableFields = ['firstName','dob','gender', 'age', 'mobile', 'address', 'email', 'bio','lastName'];
         const owner = req.owner
         Object.keys(req.body).forEach((key) => {
             if (editableFields.includes(key)) {
@@ -41,13 +32,16 @@ profileRouter.patch('/profile/edit', async (req, res) => {
             }
         })
         await owner.save();
-        res.json({ 'message': `${owner.firstName}, Your Profile Updated succesfully` });
+        res.json({
+        message: `${owner.firstName}, Your Profile Updated successfully`,
+        owner
+        });
     } catch (err) {
-        res.status(400).end("Error : ", err);
+        res.status(400).json({"Error": err?.message});
     }
 })
 
-profileRouter.patch('/profile/passwordUpdate', async (req, res) => {
+ownerProfileRouter.patch('/passwordUpdate', ownerAuth, async (req, res) => {
     try {
         const { oldPassword, newPassword, confirmPassword } = req.body;
         const isOldPassValid = await bcrypt.compare(oldPassword, req.owner.password)
@@ -62,10 +56,10 @@ profileRouter.patch('/profile/passwordUpdate', async (req, res) => {
         }
         const newPasswordHash = await bcrypt.hash(newPassword, 10);
         await ownerModel.findByIdAndUpdate(req.owner._id, { password: newPasswordHash });
-        res.status(200).send("Password updated successfully");
+        res.status(200).send(`${req.owner.firstName} Password updated successfully`);
     } catch (err) {
         res.status(400).send(err.message);
     }
 })
 
-module.exports = { profileRouter };
+module.exports = { ownerProfileRouter };
