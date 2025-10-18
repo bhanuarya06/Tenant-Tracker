@@ -9,6 +9,7 @@ const {ownerProfileRouter} = require('./router/owner/ownerProfile')
 const {tenantProfileRouter} = require('./router/tenant/tenantProfile');
 const { connectionAuthRouter } = require('./router/owner/connectionRequest');
 const { connectionAuthTenRouter } = require('./router/tenant/connectionReqTenants');
+const { manageTenantRouter } = require('./router/owner/manageTenant');
 
 
 app.use(cors({
@@ -20,16 +21,19 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use(express.json());
 app.use('/tenant/auth',tenantAuthRouter);
 app.use('/owner/auth',ownerAuthRouter);
 app.use('/owner/profile',ownerProfileRouter);
+app.use('/owner/manageTenant',manageTenantRouter);
+
 app.use('/tenant/profile',tenantProfileRouter);
-app.use('/owner/available',connectionAuthRouter)
-app.use('/tenant/available',connectionAuthTenRouter)
+app.use('/owner/available',connectionAuthRouter);
+app.use('/tenant/available',connectionAuthTenRouter);
 
 app.post('/logout',(req,res)=>{
-    res.clearCookie('token');
+    res.cookie('token',null,{
+        expires: new Date(Date.now())
+    });
     res.status(200).send(`Logged out successfully`)
 })
 

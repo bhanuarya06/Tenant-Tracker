@@ -37,6 +37,17 @@ const tenant = new Schema({
         type: String,
         required: true
     },
+    rent: {
+        type: String,
+        required: true
+    },
+    balance: {
+        type: String
+    },
+    memberCount: {
+        type: String,
+        required: true
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: ownerModel

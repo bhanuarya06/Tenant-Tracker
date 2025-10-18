@@ -23,7 +23,7 @@ tenantProfileRouter.get('/view', tenantAuth, async (req, res) => {
 
 tenantProfileRouter.put('/edit', tenantAuth, async (req, res) => {
     try {
-        const editableFields = ['firstName','dob','gender', 'age', 'mobile', 'address', 'email', 'bio','lastName'];
+        const editableFields = ['firstName','dob','gender', 'age', 'mobile', 'address', 'email', 'bio','lastName','rent','memberCount','balance'];
         const tenant = req.tenant
         Object.keys(req.body).forEach((key) => {
             if (editableFields.includes(key)) {

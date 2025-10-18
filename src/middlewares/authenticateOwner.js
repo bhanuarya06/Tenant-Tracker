@@ -16,7 +16,7 @@ const ownerAuth = async (req, res, next) => {
         req.owner = owner
         next();
     } catch (err) {
-        res.status(401).send("Error : ", err.message)
+        res.status(401).send(`Error :  ${err.message}`);
     }
 }
 
