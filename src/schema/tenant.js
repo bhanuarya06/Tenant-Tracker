@@ -51,6 +51,10 @@ const tenant = new Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: ownerModel
+    },
+    active:{
+        type: Boolean,
+        default: true
     }
 }, {
     timestamps: true

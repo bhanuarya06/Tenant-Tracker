@@ -1,0 +1,208 @@
+2025-11-02 14:56:54:5654 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-02.2dxthwg.mongodb.net[39m
+2025-11-02 14:59:42:5942 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-02.2dxthwg.mongodb.net[39m
+2025-11-02 14:59:42:5942 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 14:59:42:5942 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 14:59:42:5942 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 15:04:43:443 [33mwarn[39m: [33mMongoDB disconnected[39m
+2025-11-02 15:09:05:95 [31merror[39m: [31mError: Route /owner/auth/login not found[39m
+2025-11-02 15:09:05:95 [35mhttp[39m: [35mPOST /owner/auth/login 404 - - 2.156 ms anonymous[39m
+2025-11-02 15:11:35:1135 [31merror[39m: [31mError: Route /owner/auth/login not found[39m
+2025-11-02 15:11:35:1135 [35mhttp[39m: [35mPOST /owner/auth/login 404 - - 4.036 ms anonymous[39m
+2025-11-02 15:45:23:4523 [31merror[39m: [31mLogin error: errorResponse is not a function[39m
+2025-11-02 15:45:23:4523 [31merror[39m: [31mUnhandled Promise Rejection: errorResponse is not a function[39m
+2025-11-02 15:45:23:4523 [32minfo[39m: [32mUNHANDLED_REJECTION received. Starting graceful shutdown...[39m
+2025-11-02 15:45:32:4532 [32minfo[39m: [32mHTTP server closed[39m
+2025-11-02 15:47:17:4717 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-01.2dxthwg.mongodb.net[39m
+2025-11-02 15:47:17:4717 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 15:47:17:4717 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 15:47:17:4717 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 15:47:32:4732 [31merror[39m: [31mLogin error: errorResponse is not a function[39m
+2025-11-02 15:47:32:4732 [31merror[39m: [31mUnhandled Promise Rejection: errorResponse is not a function[39m
+2025-11-02 15:47:32:4732 [32minfo[39m: [32mUNHANDLED_REJECTION received. Starting graceful shutdown...[39m
+2025-11-02 15:47:42:4742 [32minfo[39m: [32mHTTP server closed[39m
+2025-11-02 15:48:01:481 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-02.2dxthwg.mongodb.net[39m
+2025-11-02 15:48:01:481 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 15:48:01:481 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 15:48:01:481 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 15:48:11:4811 [35mhttp[39m: [35mGET /health 200 113 - 1.053 ms anonymous[39m
+2025-11-02 15:48:14:4814 [32minfo[39m: [32mSIGTERM received. Starting graceful shutdown...[39m
+2025-11-02 15:48:15:4815 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-01.2dxthwg.mongodb.net[39m
+2025-11-02 15:48:15:4815 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 15:48:15:4815 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 15:48:15:4815 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 15:48:40:4840 [32minfo[39m: [32mSIGINT received. Starting graceful shutdown...[39m
+2025-11-02 15:48:48:4848 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-00.2dxthwg.mongodb.net[39m
+2025-11-02 15:48:48:4848 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 15:48:48:4848 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 15:48:48:4848 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 15:48:54:4854 [35mhttp[39m: [35mGET /health 200 113 - 1.238 ms anonymous[39m
+2025-11-02 15:48:59:4859 [31merror[39m: [31mLogin error: errorResponse is not a function[39m
+2025-11-02 15:48:59:4859 [31merror[39m: [31mUnhandled Promise Rejection: errorResponse is not a function[39m
+2025-11-02 15:48:59:4859 [32minfo[39m: [32mUNHANDLED_REJECTION received. Starting graceful shutdown...[39m
+2025-11-02 15:49:29:4929 [31merror[39m: [31mForcing server shutdown[39m
+2025-11-02 15:50:10:5010 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-00.2dxthwg.mongodb.net[39m
+2025-11-02 15:50:10:5010 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 15:50:10:5010 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 15:50:10:5010 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 15:50:16:5016 [31merror[39m: [31mLogin error: Invalid status code: Invalid email or password[39m
+2025-11-02 15:50:16:5016 [31merror[39m: [31mUnhandled Promise Rejection: Invalid status code: Login failed[39m
+2025-11-02 15:50:16:5016 [32minfo[39m: [32mUNHANDLED_REJECTION received. Starting graceful shutdown...[39m
+2025-11-02 15:50:20:5020 [32minfo[39m: [32mHTTP server closed[39m
+2025-11-02 15:51:22:5122 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-01.2dxthwg.mongodb.net[39m
+2025-11-02 15:51:22:5122 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 15:51:22:5122 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 15:51:22:5122 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 15:51:30:5130 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 57.726 ms anonymous[39m
+2025-11-02 15:51:38:5138 [35mhttp[39m: [35mGET /health 200 113 - 0.388 ms anonymous[39m
+2025-11-02 15:51:42:5142 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 37.758 ms anonymous[39m
+2025-11-02 15:52:13:5213 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-01.2dxthwg.mongodb.net[39m
+2025-11-02 15:52:34:5234 [35mhttp[39m: [35mGET /health 200 113 - 0.391 ms anonymous[39m
+2025-11-02 15:52:50:5250 [32minfo[39m: [32mUser registered successfully: owner@example.com[39m
+2025-11-02 15:52:50:5250 [35mhttp[39m: [35mPOST /api/auth/register 201 605 - 302.235 ms anonymous[39m
+2025-11-02 15:52:56:5256 [35mhttp[39m: [35mPOST /api/auth/login 401 76 - 242.068 ms anonymous[39m
+2025-11-02 15:54:09:549 [31merror[39m: [31mError: Route /auth/login not found[39m
+2025-11-02 15:54:09:549 [35mhttp[39m: [35mPOST /auth/login 404 1439 - 1.122 ms anonymous[39m
+2025-11-02 15:54:27:5427 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 32.994 ms anonymous[39m
+2025-11-02 15:54:35:5435 [33mwarn[39m: [33mValidation error:[39m
+2025-11-02 15:54:35:5435 [35mhttp[39m: [35mPOST /api/auth/register 400 116 - 1.594 ms anonymous[39m
+2025-11-02 15:54:52:5452 [31merror[39m: [31mRegistration error: User validation failed: phone: Please provide a valid phone number[39m
+2025-11-02 15:54:52:5452 [35mhttp[39m: [35mPOST /api/auth/register 500 125 - 46.098 ms anonymous[39m
+2025-11-02 15:54:56:5456 [32minfo[39m: [32mUser registered successfully: testowner2@test.com[39m
+2025-11-02 15:54:56:5456 [35mhttp[39m: [35mPOST /api/auth/register 201 632 - 298.098 ms anonymous[39m
+2025-11-02 15:55:02:552 [35mhttp[39m: [35mPOST /api/auth/login 401 76 - 257.698 ms anonymous[39m
+2025-11-02 15:55:53:5553 [35mhttp[39m: [35mPOST /api/auth/login 401 76 - 234.978 ms anonymous[39m
+2025-11-02 15:56:04:564 [35mhttp[39m: [35mGET /health 200 113 - 0.123 ms anonymous[39m
+2025-11-02 15:56:37:5637 [35mhttp[39m: [35mPOST /api/auth/login 401 76 - 301.456 ms anonymous[39m
+2025-11-02 15:56:44:5644 [32minfo[39m: [32mSIGTERM received. Starting graceful shutdown...[39m
+2025-11-02 15:57:31:5731 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-01.2dxthwg.mongodb.net[39m
+2025-11-02 15:57:31:5731 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 15:57:31:5731 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 15:57:31:5731 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 15:57:51:5751 [32minfo[39m: [32mSIGINT received. Starting graceful shutdown...[39m
+2025-11-02 15:58:11:5811 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-01.2dxthwg.mongodb.net[39m
+2025-11-02 15:58:11:5811 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 15:58:11:5811 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 15:58:11:5811 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 15:58:36:5836 [32minfo[39m: [32mSIGINT received. Starting graceful shutdown...[39m
+2025-11-02 15:59:10:5910 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-00.2dxthwg.mongodb.net[39m
+2025-11-02 15:59:10:5910 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 15:59:10:5910 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 15:59:10:5910 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 15:59:27:5927 [32minfo[39m: [32mUser logged in successfully: testowner2@test.com[39m
+2025-11-02 15:59:27:5927 [35mhttp[39m: [35mPOST /api/auth/login 200 620 - 264.880 ms anonymous[39m
+2025-11-02 15:59:32:5932 [35mhttp[39m: [35mGET /health 200 113 - 0.375 ms anonymous[39m
+2025-11-02 15:59:42:5942 [32minfo[39m: [32mSIGTERM received. Starting graceful shutdown...[39m
+2025-11-02 16:00:16:016 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-01.2dxthwg.mongodb.net[39m
+2025-11-02 16:00:16:016 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 16:00:16:016 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 16:00:16:016 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 16:00:37:037 [35mhttp[39m: [35mGET /health 200 113 - 1.846 ms anonymous[39m
+2025-11-02 16:00:43:043 [32minfo[39m: [32mUser logged in successfully: undefined[39m
+2025-11-02 16:00:43:043 [35mhttp[39m: [35mPOST /api/auth/login 200 371 - 292.260 ms anonymous[39m
+2025-11-02 16:01:00:10 [35mhttp[39m: [35mGET /api/auth/me 404 71 - 0.851 ms anonymous[39m
+2025-11-02 16:01:08:18 [33mwarn[39m: [33mMongoDB disconnected[39m
+2025-11-02 16:01:09:19 [31merror[39m: [31mGet profile error: Cannot read properties of undefined (reading 'userId')[39m
+2025-11-02 16:01:09:19 [35mhttp[39m: [35mGET /api/auth/profile 500 120 - 1.053 ms anonymous[39m
+2025-11-02 16:01:38:138 [32minfo[39m: [32mSIGTERM received. Starting graceful shutdown...[39m
+2025-11-02 16:01:45:145 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-01.2dxthwg.mongodb.net[39m
+2025-11-02 16:01:45:145 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 16:01:45:145 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 16:01:45:145 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 16:01:55:155 [31merror[39m: [31mGet profile error: Cannot read properties of undefined (reading 'userId')[39m
+2025-11-02 16:01:55:155 [35mhttp[39m: [35mGET /api/auth/profile 500 120 - 1.802 ms anonymous[39m
+2025-11-02 16:03:33:333 [32minfo[39m: [32mSIGTERM received. Starting graceful shutdown...[39m
+2025-11-02 16:05:19:519 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-02.2dxthwg.mongodb.net[39m
+2025-11-02 16:05:19:519 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 16:05:19:519 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 16:05:19:519 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 16:05:27:527 [32minfo[39m: [32mUser logged in successfully: undefined[39m
+2025-11-02 16:05:27:527 [35mhttp[39m: [35mPOST /api/auth/login 200 371 - 271.495 ms anonymous[39m
+2025-11-02 16:05:38:538 [35mhttp[39m: [35mGET /api/auth/profile 200 427 - 61.153 ms -[39m
+2025-11-02 16:05:51:551 [32minfo[39m: [32mUser registered successfully: testtenant@test.com[39m
+2025-11-02 16:05:51:551 [35mhttp[39m: [35mPOST /api/auth/register 201 636 - 280.214 ms anonymous[39m
+2025-11-02 16:05:55:555 [32minfo[39m: [32mUser logged in successfully: undefined[39m
+2025-11-02 16:05:55:555 [35mhttp[39m: [35mPOST /api/auth/login 200 371 - 269.699 ms anonymous[39m
+2025-11-02 16:06:01:61 [35mhttp[39m: [35mGET /api/auth/profile 200 430 - 53.846 ms -[39m
+2025-11-02 16:06:43:643 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 41.519 ms anonymous[39m
+2025-11-02 16:06:47:647 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 35.797 ms anonymous[39m
+2025-11-02 16:06:47:647 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 28.907 ms anonymous[39m
+2025-11-02 16:06:48:648 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 40.202 ms anonymous[39m
+2025-11-02 16:06:49:649 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 37.598 ms anonymous[39m
+2025-11-02 16:06:50:650 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 31.335 ms anonymous[39m
+2025-11-02 16:06:56:656 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 28.841 ms anonymous[39m
+2025-11-02 16:07:12:712 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 37.332 ms anonymous[39m
+2025-11-02 16:07:14:714 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 49.849 ms anonymous[39m
+2025-11-02 16:07:15:715 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 29.407 ms anonymous[39m
+2025-11-02 16:11:25:1125 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-02.2dxthwg.mongodb.net[39m
+2025-11-02 16:12:44:1244 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 39.150 ms anonymous[39m
+2025-11-02 16:12:48:1248 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 43.431 ms anonymous[39m
+2025-11-02 16:13:03:133 [35mhttp[39m: [35mGET /api/auth/login 404 74 - 0.687 ms anonymous[39m
+2025-11-02 16:13:08:138 [31merror[39m: [31mError: Route / not found[39m
+2025-11-02 16:13:08:138 [35mhttp[39m: [35mHEAD / 404 1419 - 1.030 ms anonymous[39m
+2025-11-02 16:13:28:1328 [33mwarn[39m: [33mValidation error:[39m
+2025-11-02 16:13:28:1328 [35mhttp[39m: [35mPOST /api/auth/login 400 133 - 1.685 ms anonymous[39m
+2025-11-02 16:14:47:1447 [32minfo[39m: [32mSIGTERM received. Starting graceful shutdown...[39m
+2025-11-02 16:16:39:1639 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-00.2dxthwg.mongodb.net[39m
+2025-11-02 16:16:39:1639 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 16:16:39:1639 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 16:16:39:1639 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 16:16:46:1646 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 40.821 ms anonymous[39m
+2025-11-02 16:16:48:1648 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 33.668 ms anonymous[39m
+2025-11-02 16:16:49:1649 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 39.903 ms anonymous[39m
+2025-11-02 16:16:49:1649 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 29.311 ms anonymous[39m
+2025-11-02 16:17:54:1754 [32minfo[39m: [32mSIGTERM received. Starting graceful shutdown...[39m
+2025-11-02 16:23:43:2343 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-01.2dxthwg.mongodb.net[39m
+2025-11-02 16:23:43:2343 [32minfo[39m: [32m🚀 Server running on port 5001 in development mode[39m
+2025-11-02 16:23:43:2343 [32minfo[39m: [32m📋 Health check: http://localhost:5001/health[39m
+2025-11-02 16:23:43:2343 [32minfo[39m: [32m📚 API documentation: http://localhost:5001/api/docs[39m
+2025-11-02 16:23:53:2353 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 44.086 ms anonymous[39m
+2025-11-02 16:23:55:2355 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 44.436 ms anonymous[39m
+2025-11-02 16:27:39:2739 [35mhttp[39m: [35mGET /api/user/profile 404 76 - 0.636 ms anonymous[39m
+2025-11-02 16:33:04:334 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 68.210 ms anonymous[39m
+2025-11-02 16:33:05:335 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 29.420 ms anonymous[39m
+2025-11-02 16:33:36:3336 [35mhttp[39m: [35mGET /api/user/profile 404 76 - 0.452 ms anonymous[39m
+2025-11-02 16:34:18:3418 [35mhttp[39m: [35mGET /api/user/profile 404 76 - 0.498 ms anonymous[39m
+2025-11-02 16:35:30:3530 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 40.534 ms anonymous[39m
+2025-11-02 16:35:35:3535 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 41.556 ms anonymous[39m
+2025-11-02 16:36:06:366 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 38.164 ms anonymous[39m
+2025-11-02 16:36:07:367 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 27.647 ms anonymous[39m
+2025-11-02 16:36:10:3610 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 42.027 ms anonymous[39m
+2025-11-02 16:36:14:3614 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 31.500 ms anonymous[39m
+2025-11-02 16:36:14:3614 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 42.019 ms anonymous[39m
+2025-11-02 16:36:16:3616 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 35.986 ms anonymous[39m
+2025-11-02 16:38:18:3818 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 38.185 ms anonymous[39m
+2025-11-02 16:38:23:3823 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 38.056 ms anonymous[39m
+2025-11-02 16:38:36:3836 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 39.914 ms anonymous[39m
+2025-11-02 16:40:39:4039 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 49.822 ms anonymous[39m
+2025-11-02 16:40:42:4042 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 34.854 ms anonymous[39m
+2025-11-02 16:42:39:4239 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 39.697 ms anonymous[39m
+2025-11-02 16:58:13:5813 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 63.338 ms anonymous[39m
+2025-11-02 16:58:15:5815 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 37.044 ms anonymous[39m
+2025-11-02 17:01:12:112 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 46.917 ms anonymous[39m
+2025-11-02 17:01:13:113 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 37.921 ms anonymous[39m
+2025-11-02 17:01:15:115 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 35.358 ms anonymous[39m
+2025-11-02 17:01:16:116 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 39.032 ms anonymous[39m
+2025-11-02 17:01:17:117 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 30.621 ms anonymous[39m
+2025-11-02 17:02:36:236 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 37.296 ms anonymous[39m
+2025-11-02 17:02:37:237 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 31.078 ms anonymous[39m
+2025-11-02 17:10:41:1041 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 47.628 ms anonymous[39m
+2025-11-02 17:11:05:115 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 32.513 ms anonymous[39m
+2025-11-02 17:11:34:1134 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 38.520 ms anonymous[39m
+2025-11-02 17:11:36:1136 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 35.327 ms anonymous[39m
+2025-11-02 17:11:40:1140 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 40.504 ms anonymous[39m
+2025-11-02 17:11:51:1151 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 41.728 ms anonymous[39m
+2025-11-02 17:12:34:1234 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 32.419 ms anonymous[39m
+2025-11-02 17:13:21:1321 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 49.128 ms anonymous[39m
+2025-11-02 17:13:48:1348 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 38.749 ms anonymous[39m
+2025-11-02 17:14:14:1414 [35mhttp[39m: [35mPOST /api/auth/login 401 55 - 35.830 ms anonymous[39m
+2025-11-02 17:15:57:1557 [32minfo[39m: [32mSIGINT received. Starting graceful shutdown...[39m
+2025-11-02 17:48:29:4829 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-00.2dxthwg.mongodb.net[39m
+2025-11-02 17:48:29:4829 [32minfo[39m: [32m🚀 Server running on port 3000 in development mode[39m
+2025-11-02 17:48:29:4829 [32minfo[39m: [32m📋 Health check: http://localhost:3000/health[39m
+2025-11-02 17:48:29:4829 [32minfo[39m: [32m📚 API documentation: http://localhost:3000/api/docs[39m
+2025-11-02 17:48:52:4852 [32minfo[39m: [32mSIGINT received. Starting graceful shutdown...[39m
+2025-11-02 17:49:47:4947 [32minfo[39m: [32mMongoDB Connected: ac-wv4zg3h-shard-00-02.2dxthwg.mongodb.net[39m
+2025-11-02 17:49:47:4947 [32minfo[39m: [32m🚀 Server running on port 3000 in development mode[39m
+2025-11-02 17:49:47:4947 [32minfo[39m: [32m📋 Health check: http://localhost:3000/health[39m
+2025-11-02 17:49:47:4947 [32minfo[39m: [32m📚 API documentation: http://localhost:3000/api/docs[39m
+2025-11-02 17:50:02:502 [32minfo[39m: [32mSIGINT received. Starting graceful shutdown...[39m

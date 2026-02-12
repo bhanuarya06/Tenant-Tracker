@@ -1,0 +1,19 @@
+2025-11-02 14:56:54:5654 [31merror[39m: [31mUncaught Exception: listen EADDRINUSE: address already in use :::5000[39m
+2025-11-02 15:09:05:95 [31merror[39m: [31mError: Route /owner/auth/login not found[39m
+2025-11-02 15:11:35:1135 [31merror[39m: [31mError: Route /owner/auth/login not found[39m
+2025-11-02 15:45:23:4523 [31merror[39m: [31mLogin error: errorResponse is not a function[39m
+2025-11-02 15:45:23:4523 [31merror[39m: [31mUnhandled Promise Rejection: errorResponse is not a function[39m
+2025-11-02 15:47:32:4732 [31merror[39m: [31mLogin error: errorResponse is not a function[39m
+2025-11-02 15:47:32:4732 [31merror[39m: [31mUnhandled Promise Rejection: errorResponse is not a function[39m
+2025-11-02 15:48:59:4859 [31merror[39m: [31mLogin error: errorResponse is not a function[39m
+2025-11-02 15:48:59:4859 [31merror[39m: [31mUnhandled Promise Rejection: errorResponse is not a function[39m
+2025-11-02 15:49:29:4929 [31merror[39m: [31mForcing server shutdown[39m
+2025-11-02 15:50:16:5016 [31merror[39m: [31mLogin error: Invalid status code: Invalid email or password[39m
+2025-11-02 15:50:16:5016 [31merror[39m: [31mUnhandled Promise Rejection: Invalid status code: Login failed[39m
+2025-11-02 15:52:13:5213 [31merror[39m: [31mUncaught Exception: listen EADDRINUSE: address already in use :::5001[39m
+2025-11-02 15:54:09:549 [31merror[39m: [31mError: Route /auth/login not found[39m
+2025-11-02 15:54:52:5452 [31merror[39m: [31mRegistration error: User validation failed: phone: Please provide a valid phone number[39m
+2025-11-02 16:01:09:19 [31merror[39m: [31mGet profile error: Cannot read properties of undefined (reading 'userId')[39m
+2025-11-02 16:01:55:155 [31merror[39m: [31mGet profile error: Cannot read properties of undefined (reading 'userId')[39m
+2025-11-02 16:11:25:1125 [31merror[39m: [31mUncaught Exception: listen EADDRINUSE: address already in use :::5001[39m
+2025-11-02 16:13:08:138 [31merror[39m: [31mError: Route / not found[39m

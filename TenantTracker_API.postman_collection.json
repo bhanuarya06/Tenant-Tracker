@@ -1,0 +1,1768 @@
+{
+	"info": {
+		"_postman_id": "tenant-tracker-api-2024",
+		"name": "TenantTracker API",
+		"description": "Complete API collection for TenantTracker application - Property Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Check if API is running and responsive"
+					}
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data.token) {",
+									"        pm.collectionVariables.set('authToken', response.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"owner@example.com\",\n  \"password\": \"Password123!\",\n  \"role\": \"owner\",\n  \"phone\": \"+1234567890\",\n  \"dateOfBirth\": \"1990-01-15\",\n  \"gender\": \"male\",\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"zipCode\": \"10001\",\n    \"country\": \"USA\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user (owner or tenant role)"
+					}
+				},
+				{
+					"name": "Register Tenant User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data.token) {",
+									"        pm.collectionVariables.set('authToken', response.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"tenant@example.com\",\n  \"password\": \"Password123!\",\n  \"role\": \"tenant\",\n  \"phone\": \"+1987654321\",\n  \"dateOfBirth\": \"1995-05-20\",\n  \"gender\": \"female\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new tenant user"
+					}
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data.token) {",
+									"        pm.collectionVariables.set('authToken', response.data.token);",
+									"        console.log('Auth token saved:', response.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"owner@example.com\",\n  \"password\": \"Password123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login with email and password"
+					}
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"profile"
+							]
+						},
+						"description": "Get current user profile"
+					}
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe Updated\",\n  \"phone\": \"+1234567890\",\n  \"bio\": \"Property owner and real estate investor\",\n  \"address\": {\n    \"street\": \"456 Oak Avenue\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"zipCode\": \"10002\",\n    \"country\": \"USA\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"profile"
+							]
+						},
+						"description": "Update user profile information"
+					}
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"currentPassword\": \"Password123!\",\n  \"newPassword\": \"NewPassword123!\",\n  \"confirmPassword\": \"NewPassword123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/change-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"change-password"
+							]
+						},
+						"description": "Change user password"
+					}
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/refresh-token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"refresh-token"
+							]
+						},
+						"description": "Refresh JWT token"
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logout user"
+					}
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"owner@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/forgot-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"forgot-password"
+							]
+						},
+						"description": "Request password reset email"
+					}
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"token\": \"reset-token-here\",\n  \"newPassword\": \"NewPassword123!\",\n  \"confirmPassword\": \"NewPassword123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/reset-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"reset-password"
+							]
+						},
+						"description": "Reset password with token"
+					}
+				}
+			],
+			"description": "User authentication and profile management endpoints"
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get Dashboard (Owner)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dashboard"
+							]
+						},
+						"description": "Get owner dashboard with statistics, financial summary, and recent activities"
+					}
+				},
+				{
+					"name": "Get Dashboard (Tenant)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dashboard"
+							]
+						},
+						"description": "Get tenant dashboard with lease info, bills, and payment history"
+					}
+				}
+			],
+			"description": "Dashboard endpoints for owner and tenant views"
+		},
+		{
+			"name": "Properties",
+			"item": [
+				{
+					"name": "Create Property",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sunset Apartments\",\n  \"description\": \"Modern apartment complex with excellent amenities\",\n  \"address\": {\n    \"street\": \"789 Sunset Blvd\",\n    \"city\": \"Los Angeles\",\n    \"state\": \"CA\",\n    \"zipCode\": \"90001\",\n    \"country\": \"USA\"\n  },\n  \"propertyType\": \"apartment\",\n  \"totalUnits\": 20,\n  \"amenities\": [\n    \"Swimming Pool\",\n    \"Gym\",\n    \"Parking\",\n    \"Security\",\n    \"Elevator\",\n    \"Garden\"\n  ],\n  \"images\": [\n    {\n      \"url\": \"https://example.com/images/property1.jpg\",\n      \"caption\": \"Building exterior\",\n      \"isPrimary\": true\n    },\n    {\n      \"url\": \"https://example.com/images/property2.jpg\",\n      \"caption\": \"Swimming pool area\",\n      \"isPrimary\": false\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/properties",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"properties"
+							]
+						},
+						"description": "Create a new property (Owner only)"
+					}
+				},
+				{
+					"name": "Get All Properties",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/properties?page=1&limit=10&sort=-createdAt&search=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"properties"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "-createdAt"
+								},
+								{
+									"key": "search",
+									"value": ""
+								}
+							]
+						},
+						"description": "Get all properties for the owner with pagination"
+					}
+				},
+				{
+					"name": "Get Property by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/properties/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"properties",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "property-id-here"
+								}
+							]
+						},
+						"description": "Get a single property by ID"
+					}
+				},
+				{
+					"name": "Update Property",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sunset Apartments - Updated\",\n  \"description\": \"Premium apartment complex with renovated amenities\",\n  \"totalUnits\": 25,\n  \"amenities\": [\n    \"Swimming Pool\",\n    \"Gym\",\n    \"Parking\",\n    \"Security\",\n    \"Elevator\",\n    \"Garden\",\n    \"Rooftop Terrace\"\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/properties/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"properties",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "property-id-here"
+								}
+							]
+						},
+						"description": "Update a property"
+					}
+				},
+				{
+					"name": "Delete Property",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/properties/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"properties",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "property-id-here"
+								}
+							]
+						},
+						"description": "Delete a property"
+					}
+				},
+				{
+					"name": "Get Property Statistics",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/properties/:id/stats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"properties",
+								":id",
+								"stats"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "property-id-here"
+								}
+							]
+						},
+						"description": "Get statistics for a specific property"
+					}
+				},
+				{
+					"name": "Get Available Units",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/properties/:id/units",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"properties",
+								":id",
+								"units"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "property-id-here"
+								}
+							]
+						},
+						"description": "Get available units in a property"
+					}
+				}
+			],
+			"description": "Property management endpoints (Owner only)"
+		},
+		{
+			"name": "Tenants",
+			"item": [
+				{
+					"name": "Create Tenant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user\": {\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Smith\",\n    \"email\": \"jane.smith@example.com\",\n    \"password\": \"Password123!\",\n    \"phone\": \"+1234567891\",\n    \"dateOfBirth\": \"1992-03-15\",\n    \"gender\": \"female\",\n    \"bio\": \"Looking for a comfortable place\"\n  },\n  \"property\": \"property-id-here\",\n  \"unit\": \"101\",\n  \"leaseDetails\": {\n    \"startDate\": \"2026-03-01\",\n    \"endDate\": \"2027-02-28\",\n    \"monthlyRent\": 1500,\n    \"securityDeposit\": 3000,\n    \"leaseType\": \"fixed\"\n  },\n  \"occupants\": [\n    {\n      \"name\": \"Sarah Smith\",\n      \"relationship\": \"spouse\",\n      \"dateOfBirth\": \"1992-03-15\",\n      \"phone\": \"+1234567891\"\n    }\n  ],\n  \"emergencyContacts\": [\n    {\n      \"name\": \"Robert Smith\",\n      \"relationship\": \"Father\",\n      \"phone\": \"+1234567892\",\n      \"email\": \"robert@example.com\",\n      \"isPrimary\": true\n    }\n  ],\n  \"preferences\": {\n    \"notifications\": {\n      \"email\": true,\n      \"sms\": true,\n      \"push\": true\n    },\n    \"paymentMethod\": \"online\"\n  },\n  \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tenants",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants"
+							]
+						},
+						"description": "Create a new tenant with new user account (Owner only)"
+					}
+				},
+				{
+					"name": "Create Tenant (Existing User)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user\": \"user-id-here\",\n  \"property\": \"property-id-here\",\n  \"unit\": \"102\",\n  \"leaseDetails\": {\n    \"startDate\": \"2026-03-01\",\n    \"endDate\": \"2027-02-28\",\n    \"monthlyRent\": 1600,\n    \"securityDeposit\": 3200,\n    \"leaseType\": \"fixed\"\n  },\n  \"occupants\": [],\n  \"emergencyContacts\": [\n    {\n      \"name\": \"Emergency Contact\",\n      \"relationship\": \"Friend\",\n      \"phone\": \"+1234567890\",\n      \"isPrimary\": true\n    }\n  ],\n  \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tenants",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants"
+							]
+						},
+						"description": "Create a tenant record for an existing user (Owner only)"
+					}
+				},
+				{
+					"name": "Get All Tenants",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tenants?page=1&limit=10&sort=-createdAt&search=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "-createdAt"
+								},
+								{
+									"key": "search",
+									"value": ""
+								}
+							]
+						},
+						"description": "Get all tenants for owner's properties"
+					}
+				},
+				{
+					"name": "Get Tenant Dashboard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tenants/dashboard",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants",
+								"dashboard"
+							]
+						},
+						"description": "Get tenant dashboard (Tenant only)"
+					}
+				},
+				{
+					"name": "Get Expiring Leases",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tenants/expiring-leases",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants",
+								"expiring-leases"
+							]
+						},
+						"description": "Get tenants with expiring leases (Owner only)"
+					}
+				},
+				{
+					"name": "Get Tenant by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tenants/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "tenant-id-here"
+								}
+							]
+						},
+						"description": "Get a single tenant by ID"
+					}
+				},
+				{
+					"name": "Update Tenant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"unit\": \"102\",\n  \"leaseDetails\": {\n    \"monthlyRent\": 1600,\n    \"endDate\": \"2025-12-31\"\n  },\n  \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tenants/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "tenant-id-here"
+								}
+							]
+						},
+						"description": "Update a tenant"
+					}
+				},
+				{
+					"name": "Delete Tenant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tenants/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "tenant-id-here"
+								}
+							]
+						},
+						"description": "Delete a tenant"
+					}
+				},
+				{
+					"name": "Add Tenant Note",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"content\": \"Tenant requested maintenance for AC unit\",\n  \"isPrivate\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tenants/:id/notes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tenants",
+								":id",
+								"notes"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "tenant-id-here"
+								}
+							]
+						},
+						"description": "Add a note to tenant record (Owner only)"
+					}
+				}
+			],
+			"description": "Tenant management endpoints"
+		},
+		{
+			"name": "Bills",
+			"item": [
+				{
+					"name": "Create Bill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tenant\": \"tenant-id-here\",\n  \"billingPeriod\": {\n    \"month\": 2,\n    \"year\": 2026\n  },\n  \"charges\": {\n    \"rent\": 1500,\n    \"utilities\": {\n      \"water\": 50,\n      \"electricity\": 80,\n      \"gas\": 30,\n      \"internet\": 60,\n      \"trash\": 25,\n      \"other\": {\n        \"amount\": 20,\n        \"description\": \"Common area maintenance\"\n      }\n    },\n    \"maintenance\": 0,\n    \"parking\": 100,\n    \"petFee\": 50,\n    \"lateFee\": 0,\n    \"additionalCharges\": [\n      {\n        \"description\": \"Key replacement\",\n        \"amount\": 25\n      }\n    ]\n  },\n  \"credits\": {\n    \"securityDepositRefund\": 0,\n    \"prorationCredit\": 0,\n    \"otherCredits\": []\n  },\n  \"dueDate\": \"2026-03-01\",\n  \"notes\": \"Regular monthly bill\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bills",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bills"
+							]
+						},
+						"description": "Create a new bill (Owner only)"
+					}
+				},
+				{
+					"name": "Get All Bills (Owner)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bills?page=1&limit=10&sort=-createdAt",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bills"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "-createdAt"
+								}
+							]
+						},
+						"description": "Get all bills for owner's properties"
+					}
+				},
+				{
+					"name": "Get All Bills (Tenant)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bills?page=1&limit=10&sort=-createdAt",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bills"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "-createdAt"
+								}
+							]
+						},
+						"description": "Get all bills for tenant"
+					}
+				},
+				{
+					"name": "Get Bills Summary",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bills/summary",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bills",
+								"summary"
+							]
+						},
+						"description": "Get bills summary and statistics (Owner only)"
+					}
+				},
+				{
+					"name": "Generate Recurring Bills",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"month\": 3,\n  \"year\": 2026\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bills/generate-recurring",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bills",
+								"generate-recurring"
+							]
+						},
+						"description": "Generate recurring bills for a specific month (Owner only)"
+					}
+				},
+				{
+					"name": "Get Bill by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bills/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bills",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "bill-id-here"
+								}
+							]
+						},
+						"description": "Get a single bill by ID"
+					}
+				},
+				{
+					"name": "Update Bill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"charges\": {\n    \"rent\": 1500,\n    \"lateFee\": 50\n  },\n  \"status\": \"overdue\",\n  \"notes\": \"Late fee applied\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bills/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bills",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "bill-id-here"
+								}
+							]
+						},
+						"description": "Update a bill (Owner only)"
+					}
+				},
+				{
+					"name": "Delete Bill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bills/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bills",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "bill-id-here"
+								}
+							]
+						},
+						"description": "Delete a bill (Owner only)"
+					}
+				},
+				{
+					"name": "Send Bill to Tenant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/bills/:id/send",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bills",
+								":id",
+								"send"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "bill-id-here"
+								}
+							]
+						},
+						"description": "Send bill notification to tenant (Owner only)"
+					}
+				}
+			],
+			"description": "Bill management endpoints"
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "Create Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bill\": \"bill-id-here\",\n  \"amount\": 1500,\n  \"paymentDate\": \"2026-02-15\",\n  \"paymentMethod\": \"online\",\n  \"transactionId\": \"TXN123456789\",\n  \"notes\": \"Online payment via credit card\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments"
+							]
+						},
+						"description": "Record a new payment (Owner and Tenant)"
+					}
+				},
+				{
+					"name": "Create Payment - Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bill\": \"bill-id-here\",\n  \"amount\": 1500,\n  \"paymentDate\": \"2026-02-15\",\n  \"paymentMethod\": \"check\",\n  \"checkNumber\": \"1234\",\n  \"notes\": \"Payment by check\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments"
+							]
+						},
+						"description": "Record payment by check"
+					}
+				},
+				{
+					"name": "Create Payment - Bank Transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bill\": \"bill-id-here\",\n  \"amount\": 1500,\n  \"paymentDate\": \"2026-02-15\",\n  \"paymentMethod\": \"bank_transfer\",\n  \"transactionId\": \"BANK123456\",\n  \"bankDetails\": {\n    \"bankName\": \"Chase Bank\",\n    \"accountNumber\": \"****1234\",\n    \"routingNumber\": \"021000021\"\n  },\n  \"notes\": \"Direct bank transfer\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments"
+							]
+						},
+						"description": "Record payment by bank transfer"
+					}
+				},
+				{
+					"name": "Get All Payments (Owner)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments?page=1&limit=10&sort=-createdAt",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "-createdAt"
+								}
+							]
+						},
+						"description": "Get all payments for owner's properties"
+					}
+				},
+				{
+					"name": "Get All Payments (Tenant)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments?page=1&limit=10&sort=-createdAt",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "-createdAt"
+								}
+							]
+						},
+						"description": "Get all payments for tenant"
+					}
+				},
+				{
+					"name": "Get Payment Statistics",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments/stats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments",
+								"stats"
+							]
+						},
+						"description": "Get payment statistics (Owner only)"
+					}
+				},
+				{
+					"name": "Get Payment by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "payment-id-here"
+								}
+							]
+						},
+						"description": "Get a single payment by ID"
+					}
+				},
+				{
+					"name": "Update Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"completed\",\n  \"notes\": \"Payment verified and completed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payments/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "payment-id-here"
+								}
+							]
+						},
+						"description": "Update a payment (Owner only)"
+					}
+				},
+				{
+					"name": "Delete Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "payment-id-here"
+								}
+							]
+						},
+						"description": "Delete a payment (Owner only)"
+					}
+				},
+				{
+					"name": "Process Refund",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refund\": {\n    \"amount\": 500,\n    \"reason\": \"Overpayment adjustment\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payments/:id/refund",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"payments",
+								":id",
+								"refund"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "payment-id-here"
+								}
+							]
+						},
+						"description": "Process a refund for a payment (Owner only)"
+					}
+				}
+			],
+			"description": "Payment management endpoints"
+		}
+	]
+}
