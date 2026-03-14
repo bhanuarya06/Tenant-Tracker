@@ -1,0 +1,213 @@
+{
+  "info": {
+    "name": "TenantTracker Bills API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for testing the Bills API endpoints in TenantTracker"
+  },
+  "item": [
+    {
+      "name": "Create a new bill",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tenant\": \"{{tenant_id}}\",\n  \"billingPeriod\": {\n    \"month\": 3,\n    \"year\": 2026\n  },\n  \"charges\": {\n    \"rent\": 1000,\n    \"utilities\": {\n      \"water\": 50,\n      \"electricity\": 100,\n      \"gas\": 30,\n      \"internet\": 40,\n      \"trash\": 20,\n      \"other\": {\n        \"amount\": 10,\n        \"description\": \"Cleaning fee\"\n      }\n    },\n    \"maintenance\": 0,\n    \"parking\": 0,\n    \"petFee\": 0,\n    \"lateFee\": 0,\n    \"additionalCharges\": [\n      {\n        \"description\": \"Extra service\",\n        \"amount\": 25\n      }\n    ]\n  },\n  \"credits\": {\n    \"securityDepositRefund\": 0,\n    \"prorationCredit\": 0,\n    \"otherCredits\": []\n  },\n  \"dueDate\": \"2026-03-15T00:00:00.000Z\",\n  \"notes\": \"Monthly bill for March 2026\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/bills",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bills"]
+        },
+        "description": "Create a new bill for a tenant. Requires owner authentication."
+      }
+    },
+    {
+      "name": "Get all bills (Owner) or tenant bills (Tenant)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/bills?page=1&limit=10&sort=-createdAt",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bills"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "-createdAt"
+            }
+          ]
+        },
+        "description": "Get bills based on user role. Owners get all their bills, tenants get their own bills."
+      }
+    },
+    {
+      "name": "Get bills summary/statistics",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/bills/summary",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bills", "summary"]
+        },
+        "description": "Get bills summary and statistics. Owner only."
+      }
+    },
+    {
+      "name": "Generate recurring bills for a specific month",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"month\": 3,\n  \"year\": 2026\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/bills/generate-recurring",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bills", "generate-recurring"]
+        },
+        "description": "Generate recurring bills for all active tenants for the specified month and year. Owner only."
+      }
+    },
+    {
+      "name": "Get a single bill by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/bills/{{bill_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bills", "{{bill_id}}"]
+        },
+        "description": "Get a single bill by its ID."
+      }
+    },
+    {
+      "name": "Update a bill",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"charges\": {\n    \"rent\": 1100,\n    \"utilities\": {\n      \"water\": 60,\n      \"electricity\": 120\n    },\n    \"lateFee\": 50\n  },\n  \"dueDate\": \"2026-03-20T00:00:00.000Z\",\n  \"status\": \"sent\",\n  \"notes\": \"Updated bill with late fee\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/bills/{{bill_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bills", "{{bill_id}}"]
+        },
+        "description": "Update an existing bill. Owner only."
+      }
+    },
+    {
+      "name": "Delete a bill",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/bills/{{bill_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bills", "{{bill_id}}"]
+        },
+        "description": "Delete a bill by ID. Owner only."
+      }
+    },
+    {
+      "name": "Send bill to tenant",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/bills/{{bill_id}}/send",
+          "host": ["{{base_url}}"],
+          "path": ["api", "bills", "{{bill_id}}", "send"]
+        },
+        "description": "Send a bill to the tenant. Owner only."
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "tenant_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "bill_id",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

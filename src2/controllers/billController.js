@@ -39,15 +39,38 @@ class BillController {
                 return errorResponse(res, 400, 'Bill already exists for this billing period');
             }
 
+
+            // Calculate totalAmount (netAmount logic)
+            const getTotalAmount = (charges, credits, previousBalance) => {
+                let totalCharges = charges.rent + (charges.maintenance || 0) + (charges.parking || 0) + (charges.petFee || 0) + (charges.lateFee || 0);
+                if (charges.utilities) {
+                    totalCharges += (charges.utilities.water || 0) + (charges.utilities.electricity || 0) + (charges.utilities.gas || 0) +
+                        (charges.utilities.internet || 0) + (charges.utilities.trash || 0) + ((charges.utilities.other && charges.utilities.other.amount) || 0);
+                }
+                if (charges.additionalCharges && Array.isArray(charges.additionalCharges)) {
+                    totalCharges += charges.additionalCharges.reduce((sum, c) => sum + (c.amount || 0), 0);
+                }
+                let totalCredits = (credits && credits.securityDepositRefund || 0) + (credits && credits.prorationCredit || 0);
+                if (credits && credits.otherCredits && Array.isArray(credits.otherCredits)) {
+                    totalCredits += credits.otherCredits.reduce((sum, c) => sum + (c.amount || 0), 0);
+                }
+                return totalCharges - totalCredits + (previousBalance || 0);
+            };
+
             const billData = {
                 ...req.body,
                 property: tenant.property._id,
                 owner: req.user.userId,
-                createdBy: req.user.userId
+                createdBy: req.user.userId,
+                totalAmount: getTotalAmount(
+                    req.body.charges,
+                    req.body.credits || {},
+                    req.body.previousBalance || 0
+                )
             };
 
             const bill = await Bill.create(billData);
-            
+
             // Populate the created bill
             await bill.populate([
                 { 
@@ -118,6 +141,67 @@ class BillController {
             });
         } catch (error) {
             logger.error('Get bills error:', error);
+            return errorResponse(res, 500, 'Failed to retrieve bills', error.message);
+        }
+    }
+
+    // Get bills for a specific tenant (for owners)
+    async getBillsByTenantId(req, res) {
+        try {
+            const { tenantId } = req.params;
+
+            // Verify tenant belongs to owner's property
+            const tenant = await Tenant.findById(tenantId).populate('property');
+            if (!tenant) {
+                return errorResponse(res, 404, 'Tenant not found');
+            }
+
+            const property = await Property.findOne({
+                _id: tenant.property._id,
+                owner: req.user.userId
+            });
+
+            if (!property) {
+                return errorResponse(res, 404, 'Property not found or access denied');
+            }
+
+            const { query, options } = buildQuery(req.query, ['status', 'billingPeriod.month', 'billingPeriod.year']);
+            query.tenant = tenantId;
+
+            const bills = await Bill.find(query, null, options)
+                .populate({
+                    path: 'tenant',
+                    select: 'unit',
+                    populate: [
+                        { path: 'user', select: 'firstName lastName email' },
+                        { path: 'property', select: 'name address' }
+                    ]
+                })
+                .lean();
+
+            // Add payment information
+            for (let bill of bills) {
+                const payments = await Payment.find({ bill: bill._id }).lean();
+                bill.payments = payments;
+                bill.totalPaid = payments
+                    .filter(p => p.status === 'completed')
+                    .reduce((sum, p) => sum + p.amount, 0);
+                bill.remainingAmount = bill.totalAmount - bill.totalPaid;
+            }
+
+            const total = await Bill.countDocuments(query);
+
+            return successResponse(res, 200, 'Bills retrieved successfully', {
+                bills,
+                pagination: {
+                    page: options.skip / options.limit + 1,
+                    limit: options.limit,
+                    total,
+                    pages: Math.ceil(total / options.limit)
+                }
+            });
+        } catch (error) {
+            logger.error('Get bills by tenant ID error:', error);
             return errorResponse(res, 500, 'Failed to retrieve bills', error.message);
         }
     }
@@ -434,20 +518,41 @@ class BillController {
 
                     // Create bill with basic rent charge
                     const dueDate = new Date(year, month - 1, 5); // Due on 5th of the month
-                    
+                    const charges = {
+                        rent: tenant.leaseDetails?.monthlyRent || 0
+                    };
+                    const credits = {};
+                    const previousBalance = 0;
+                    // Calculate totalAmount
+                    const getTotalAmount = (charges, credits, previousBalance) => {
+                        let totalCharges = charges.rent + (charges.maintenance || 0) + (charges.parking || 0) + (charges.petFee || 0) + (charges.lateFee || 0);
+                        if (charges.utilities) {
+                            totalCharges += (charges.utilities.water || 0) + (charges.utilities.electricity || 0) + (charges.utilities.gas || 0) +
+                                (charges.utilities.internet || 0) + (charges.utilities.trash || 0) + ((charges.utilities.other && charges.utilities.other.amount) || 0);
+                        }
+                        if (charges.additionalCharges && Array.isArray(charges.additionalCharges)) {
+                            totalCharges += charges.additionalCharges.reduce((sum, c) => sum + (c.amount || 0), 0);
+                        }
+                        let totalCredits = (credits && credits.securityDepositRefund || 0) + (credits && credits.prorationCredit || 0);
+                        if (credits && credits.otherCredits && Array.isArray(credits.otherCredits)) {
+                            totalCredits += credits.otherCredits.reduce((sum, c) => sum + (c.amount || 0), 0);
+                        }
+                        return totalCharges - totalCredits + (previousBalance || 0);
+                    };
                     const billData = {
                         tenant: tenant._id,
                         billingPeriod: { month, year },
-                        charges: {
-                            rent: tenant.leaseDetails?.monthlyRent || 0
-                        },
+                        charges,
+                        credits,
+                        previousBalance,
                         dueDate,
-                        createdBy: req.user.userId
+                        property: tenant.property._id,
+                        owner: req.user.userId,
+                        createdBy: req.user.userId,
+                        totalAmount: getTotalAmount(charges, credits, previousBalance)
                     };
-
                     const bill = await Bill.create(billData);
                     generatedBills.push(bill);
-
                 } catch (error) {
                     errors.push({
                         tenantId: tenant._id,

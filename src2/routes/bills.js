@@ -47,6 +47,17 @@ router.get('/summary',
 );
 
 /**
+ * @route   GET /api/bills/tenant/:tenantId
+ * @desc    Get bills for a specific tenant
+ * @access  Private (Owner only)
+ */
+router.get('/tenant/:tenantId',
+    requireRole('owner'),
+    validate(pagination),
+    billController.getBillsByTenantId
+);
+
+/**
  * @route   POST /api/bills/generate-recurring
  * @desc    Generate recurring bills for a specific month
  * @access  Private (Owner only)

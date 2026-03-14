@@ -1,76 +1,25 @@
-// const p1 = new Promise((res,rej) => {setTimeout(()=>{
-//     return res("P1 Completed");
-// },10000)});
+import {fileURLToPath} from "url";
+import path from "path";
+import {LlamaModel, LlamaContext, LlamaChatSession} from "node-llama-cpp";
 
-// const p2 = new Promise((res,rej) => {setTimeout(()=>{
-//     return res("P2 Completed");
-// },5000)});
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// async function getData(){
-//     const adata = await fetch("https://api.github.com/users/akshaymarch7");
-//     const value = await adata.json();
-//     console.log("data-1:",value);
-//     const res2 = await p2;
-//     console.log("After p2-1: ",res2);
-//     const res = await p1;
-//     console.log("After p1: ",res);
-
-//     console.log("final result :");
-//     console.log(res);
-//     console.log(res2);
-// }
-
-// getData();
-// // const result = getData();
-// // console.log(result);
-// console.log("end");
-
-// const result2 = async ()=>{
-//     fetch("https://api.github.com/users/akshaymarch7").then(data=>data.json()).then(data=>console.log("data-2-1:",data));
-//     const adata = await fetch("https://api.github.com/users/akshaymarch7");
-//     const value = await adata.json();
-//     console.log("data-2-2:",value);
-//     const res2 = await p2;
-//     console.log("After p2-2: ",res2);
-//     return "dummy";
-// }
-// const result2value = result2();
-// console.log("end2");
-// console.log("result2value: ",result2value);
-// result2value.then(data => console.log("resolvedData:", data));
+const model = new LlamaModel({
+    modelPath: path.join(__dirname, "models", "codellama-13b.Q3_K_M.gguf")
+});
+const context = new LlamaContext({model});
+const session = new LlamaChatSession({context});
 
 
+const q1 = "Hi there, how are you?";
+console.log("User: " + q1);
+
+const a1 = await session.prompt(q1);
+console.log("AI: " + a1);
 
 
+const q2 = "Summerize what you said";
+console.log("User: " + q2);
 
-
-
-
-
-
-
-
-
-
-
-
-const p1 = new Promise((res,rej) => {setTimeout(()=>{
-    return res("P1 Completed");
-},10000)});
-
-const p2 = new Promise((res,rej) => {setTimeout(()=>{
-    return res("P2 Completed");
-},5000)});
-
-async function getData(){
-    const res = await p1;
-    console.log("After p1: ",res);
-    const res2 = await new Promise((res,rej) => {setTimeout(()=>{
-                                    return res("P2 Completed");
-                                },5000)});
-    console.log("After p2: ",res2);
-    
-}
-
-getData();
-console.log("end");
+const a2 = await session.prompt(q2);
+console.log("AI: " + a2);

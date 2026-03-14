@@ -152,6 +152,11 @@ const billSchema = new Schema({
         default: 0,
         min: [0, 'Paid amount must be positive']
     },
+    totalAmount: {
+        type: Number,
+        required: true,
+        min: [0, 'Total amount must be positive']
+    },
     paymentMethod: {
         type: String,
         enum: ['cash', 'check', 'bank_transfer', 'online', 'other'],
@@ -289,9 +294,9 @@ billSchema.pre('save', function(next) {
     }
     
     // Validate due date is not in the past for new bills
-    if (this.isNew && this.dueDate < new Date()) {
-        return next(new Error('Due date cannot be in the past'));
-    }
+    // if (this.isNew && this.dueDate < new Date()) {
+    //     return next(new Error('Due date cannot be in the past'));
+    // }
     
     next();
 });

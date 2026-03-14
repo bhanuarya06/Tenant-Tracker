@@ -210,7 +210,7 @@ const billCreate = Joi.object({
             trash: Joi.number().min(0).default(0),
             other: Joi.object({
                 amount: Joi.number().min(0).default(0),
-                description: Joi.string().trim()
+                description: Joi.string().trim().allow('')
             })
         }),
         maintenance: Joi.number().min(0).default(0),
@@ -230,8 +230,8 @@ const billCreate = Joi.object({
             amount: Joi.number().min(0).required()
         }))
     }),
-    dueDate: Joi.date().min('now').required(),
-    notes: Joi.string().max(500)
+    dueDate: Joi.date().required(),
+    notes: Joi.string().max(500).allow('').optional()
 });
 
 const billUpdate = Joi.object({
@@ -267,7 +267,7 @@ const billUpdate = Joi.object({
     }),
     dueDate: Joi.date(),
     status: Joi.string().valid('draft', 'sent', 'paid', 'partial', 'overdue', 'cancelled'),
-    notes: Joi.string().max(500)
+    notes: Joi.string().max(500).allow('')
 });
 
 // Payment validation schemas
@@ -283,12 +283,12 @@ const paymentCreate = Joi.object({
         accountNumber: Joi.string().trim(),
         routingNumber: Joi.string().trim()
     }),
-    notes: Joi.string().max(500)
+    notes: Joi.string().max(500).allow('').optional()
 });
 
 const paymentUpdate = Joi.object({
     status: Joi.string().valid('pending', 'completed', 'failed', 'refunded', 'cancelled'),
-    notes: Joi.string().max(500),
+    notes: Joi.string().max(500).allow(''),
     refund: Joi.object({
         amount: Joi.number().min(0).required(),
         reason: Joi.string().trim().required()
