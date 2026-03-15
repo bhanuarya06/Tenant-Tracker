@@ -87,7 +87,7 @@ app.get('/health', (req, res) => {
 const routes = require('./routes');
 
 // API routes
-app.use('/api', routes);
+app.use('/', routes);
 
 // Catch 404 and forward to error handler
 app.use(notFoundHandler);
