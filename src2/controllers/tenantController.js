@@ -259,6 +259,7 @@ class TenantController {
             // Remove fields that shouldn't be updated directly on Tenant
             delete tenantUpdates._id;
             delete tenantUpdates.email; // Email is in User model
+            delete tenantUpdates.user; // User is handled separately
 
             // If updating unit, check availability
             if (tenantUpdates.unit) {
