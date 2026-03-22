@@ -3,6 +3,7 @@ const { auth } = require('../middleware/auth');
 
 // Import route modules
 const authRoutes = require('./auth');
+const oauth2Routes = require('./oauth2');
 const propertyRoutes = require('./properties');
 const tenantRoutes = require('./tenants');
 const billRoutes = require('./bills');
@@ -28,7 +29,10 @@ router.get('/health', (req, res) => {
     });
 });
 
-// Authentication routes (public)
+// OAuth 2.0 / OIDC routes (mounted at root for standard paths)
+router.use('/', oauth2Routes);
+
+// Legacy authentication routes (kept for backward compatibility)
 router.use('/auth', authRoutes);
 
 // Protected routes

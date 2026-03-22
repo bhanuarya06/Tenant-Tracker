@@ -1,30 +1,18 @@
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const tokenService = require('../services/tokenService');
 const logger = require('../utils/logger');
 const { successResponse, errorResponse } = require('../utils/response');
 const config = require('../config/config');
+
+// Standard scopes for first-party token issuance
+const DEFAULT_SCOPES = ['openid', 'profile', 'email', 'offline_access'];
 
 class AuthController {
     // Register a new user
     async register(req, res) {
         try {
             const { email } = req.body;
-            
-            // Log incoming request data for debugging
-            logger.info('Registration request received:', {
-                fields: Object.keys(req.body),
-                frontendFields: {
-                    dob: req.body.dob,
-                    mobile: req.body.mobile,
-                    bio: req.body.bio,
-                    gender: req.body.gender
-                },
-                backendExpected: {
-                    dateOfBirth: req.body.dateOfBirth,
-                    phone: req.body.phone
-                }
-            });
-            
+
             // Check if user already exists
             const existingUser = await User.findOne({ email });
             if (existingUser) {
@@ -53,44 +41,14 @@ class AuthController {
                 }
             });
 
-            logger.info('Creating user with data:', {
-                fields: Object.keys(userData),
-                hasDateOfBirth: !!userData.dateOfBirth,
-                hasGender: !!userData.gender
-            });
-
             // Create new user
             const user = await User.create(userData);
-            
-            // Log what was actually saved
-            logger.info('User created successfully:', {
-                userId: user._id,
-                savedFields: Object.keys(user.toObject()),
-                dateOfBirth: user.dateOfBirth,
-                gender: user.gender,
-                hasDateOfBirth: !!user.dateOfBirth,
-                hasGender: !!user.gender
-            });
-            
-            // Generate JWT token
-            console.log('🔐 Registration JWT Debug:', {
-                jwtSecretExists: !!config.JWT_SECRET,
-                jwtSecretLength: config.JWT_SECRET?.length,
-                jwtSecretStart: config.JWT_SECRET?.substring(0, 20) + '...',
-                userId: user._id,
-                role: user.role
-            });
 
-            const token = jwt.sign(
-                { userId: user._id, role: user.role },
-                config.JWT_SECRET,
-                { expiresIn: config.JWT_EXPIRE }
-            );
-
-            console.log('✅ Token Generated:', {
-                tokenLength: token.length,
-                tokenStart: token.substring(0, 20) + '...'
-            });
+            // Issue RS256 access token + httpOnly refresh token cookie
+            const meta = { ip: req.ip, userAgent: req.get('User-Agent') };
+            const token = tokenService.generateAccessToken(user, DEFAULT_SCOPES);
+            const refreshToken = await tokenService.generateRefreshToken(user, DEFAULT_SCOPES, meta);
+            this._setRefreshTokenCookie(res, refreshToken);
 
             // Create clean user response with both field name formats for frontend compatibility
             const userResponse = {
@@ -121,7 +79,8 @@ class AuthController {
 
             return successResponse(res, 201, 'User registered successfully', {
                 user: userResponse,
-                token
+                token,
+                expiresIn: config.ACCESS_TOKEN_TTL
             });
         } catch (error) {
             logger.error('Registration error:', error);
@@ -170,12 +129,11 @@ class AuthController {
             user.lastLogin = new Date();
             await user.save();
 
-            // Generate JWT token
-            const token = jwt.sign(
-                { userId: user._id, role: user.role },
-                config.JWT_SECRET,
-                { expiresIn: config.JWT_EXPIRE }
-            );
+            // Issue RS256 access token + httpOnly refresh token cookie
+            const meta = { ip: req.ip, userAgent: req.get('User-Agent') };
+            const token = tokenService.generateAccessToken(user, DEFAULT_SCOPES);
+            const refreshToken = await tokenService.generateRefreshToken(user, DEFAULT_SCOPES, meta);
+            this._setRefreshTokenCookie(res, refreshToken);
 
             // Create clean user response with all necessary fields
             const userResponse = {
@@ -206,7 +164,8 @@ class AuthController {
 
             return successResponse(res, 200, 'Login successful', {
                 user: userResponse,
-                token
+                token,
+                expiresIn: config.ACCESS_TOKEN_TTL
             });
         } catch (error) {
             logger.error('Login error:', error);
@@ -353,42 +312,25 @@ class AuthController {
         }
     }
 
-    // Refresh token
-    async refreshToken(req, res) {
-        try {
-            const userId = req.user.userId;
-            
-            // Verify user still exists and is active
-            const user = await User.findById(userId);
-            if (!user || !user.isActive) {
-                return errorResponse(res, 401, 'User not found or inactive');
-            }
-
-            // Generate new token
-            const token = jwt.sign(
-                { userId: user._id, role: user.role },
-                config.JWT_SECRET,
-                { expiresIn: config.JWT_EXPIRE }
-            );
-
-            return successResponse(res, 200, 'Token refreshed successfully', { token });
-        } catch (error) {
-            logger.error('Refresh token error:', error);
-            return errorResponse(res, 500, 'Failed to refresh token', error.message);
-        }
-    }
-
-    // Logout (client-side token removal)
+    // Logout (revoke refresh token + clear cookie)
     async logout(req, res) {
         try {
-            const userId = req.user.userId;
-            
+            const userId = req.user.userId || req.user.sub;
+
+            // Revoke refresh token from cookie if present
+            const rawRefreshToken = req.cookies?.refresh_token;
+            if (rawRefreshToken) {
+                await tokenService.revokeRefreshToken(rawRefreshToken);
+            }
+            this._clearRefreshTokenCookie(res);
+
             logger.info(`User logged out: ${userId}`);
-            
+
             return successResponse(res, 200, 'Logged out successfully');
         } catch (error) {
             logger.error('Logout error:', error);
-            return errorResponse(res, 500, 'Logout failed', error.message);
+            this._clearRefreshTokenCookie(res);
+            return successResponse(res, 200, 'Logged out successfully');
         }
     }
 
@@ -414,6 +356,25 @@ class AuthController {
             logger.error('Reset password error:', error);
             return errorResponse(res, 500, 'Failed to reset password', error.message);
         }
+    }
+
+    _setRefreshTokenCookie(res, refreshToken) {
+        res.cookie('refresh_token', refreshToken, {
+            httpOnly: true,
+            secure: config.NODE_ENV === 'production',
+            sameSite: 'lax',
+            path: '/',
+            maxAge: config.REFRESH_TOKEN_TTL * 1000,
+        });
+    }
+
+    _clearRefreshTokenCookie(res) {
+        res.clearCookie('refresh_token', {
+            httpOnly: true,
+            secure: config.NODE_ENV === 'production',
+            sameSite: 'lax',
+            path: '/',
+        });
     }
 }
 

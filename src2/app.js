@@ -8,6 +8,7 @@ const { connectDB } = require('./config/database');
 const { httpLogger } = require('./middleware/logger');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 const { apiLimiter } = require('./middleware/rateLimiter');
+const keyManager = require('./services/keyManager');
 const logger = require('./utils/logger');
 
 // Routes will be imported in the routes section below
@@ -82,6 +83,9 @@ app.use(errorHandler);
 // Start server
 const startServer = async () => {
     try {
+        // Initialize RSA key manager (generates or loads signing keys)
+        await keyManager.initialize();
+
         // Connect to database
         await connectDB();
         

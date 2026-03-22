@@ -295,6 +295,72 @@ const paymentUpdate = Joi.object({
     })
 });
 
+// ═══════════════════════════════════════════
+// OAuth 2.0 / OIDC Validation Schemas
+// ═══════════════════════════════════════════
+
+const oauthLogin = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+});
+
+const oauthRegister = Joi.object({
+    firstName: Joi.string().trim().min(2).max(50).required(),
+    lastName: Joi.string().trim().max(50),
+    email: Joi.string().email().lowercase().required(),
+    password: Joi.string().min(8).max(128).required(),
+    role: Joi.string().valid('owner', 'tenant').default('owner'),
+    phone: Joi.string().pattern(/^[\+]?[1-9][\d]{0,15}$/),
+    mobile: Joi.string().pattern(/^[\+]?[1-9][\d]{0,15}$/),
+    dateOfBirth: Joi.date().max('now'),
+    dob: Joi.date().max('now'),
+    gender: Joi.string().valid('male', 'female', 'other'),
+    address: Joi.object({
+        street: Joi.string().trim(),
+        city: Joi.string().trim(),
+        state: Joi.string().trim(),
+        zipCode: Joi.string().trim(),
+        country: Joi.string().trim(),
+    }),
+    bio: Joi.string().max(500),
+});
+
+const oauthToken = Joi.object({
+    grant_type: Joi.string().valid('authorization_code', 'refresh_token').required(),
+    code: Joi.string().when('grant_type', {
+        is: 'authorization_code',
+        then: Joi.required(),
+    }),
+    redirect_uri: Joi.string().uri().when('grant_type', {
+        is: 'authorization_code',
+        then: Joi.required(),
+    }),
+    client_id: Joi.string().when('grant_type', {
+        is: 'authorization_code',
+        then: Joi.required(),
+    }),
+    code_verifier: Joi.string().min(43).max(128).when('grant_type', {
+        is: 'authorization_code',
+        then: Joi.required(),
+    }),
+    refresh_token: Joi.string().when('grant_type', {
+        is: 'refresh_token',
+        then: Joi.optional(), // Can come from cookie
+    }),
+});
+
+const oauthAuthorizePost = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+    client_id: Joi.string().required(),
+    redirect_uri: Joi.string().uri().required(),
+    code_challenge: Joi.string().required(),
+    code_challenge_method: Joi.string().valid('S256').required(),
+    scope: Joi.string(),
+    state: Joi.string().required(),
+    nonce: Joi.string(),
+});
+
 module.exports = {
     // Common
     objectId,
@@ -320,5 +386,11 @@ module.exports = {
     
     // Payment validations
     paymentCreate,
-    paymentUpdate
+    paymentUpdate,
+
+    // OAuth 2.0 / OIDC validations
+    oauthLogin,
+    oauthRegister,
+    oauthToken,
+    oauthAuthorizePost
 };

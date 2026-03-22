@@ -27,9 +27,9 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: [true, 'Password is required'],
         minlength: [8, 'Password must be at least 8 characters'],
-        select: false // Don't include password in queries by default
+        select: false, // Don't include password in queries by default
+        // Not required — OAuth users authenticate via provider, not password
     },
     role: {
         type: String,
@@ -105,7 +105,35 @@ const userSchema = new Schema({
     lockUntil: {
         type: Date,
         select: false
-    }
+    },
+
+    // ═══════════════════════════════════════════
+    // OAuth Provider Linked Accounts
+    // ═══════════════════════════════════════════
+    oauthProviders: [{
+        provider: {
+            type: String,
+            enum: ['google', 'github'],
+            required: true,
+        },
+        providerId: {
+            type: String,
+            required: true,
+        },
+        email: {
+            type: String,
+        },
+        displayName: {
+            type: String,
+        },
+        avatar: {
+            type: String,
+        },
+        linkedAt: {
+            type: Date,
+            default: Date.now,
+        },
+    }],
 }, {
     timestamps: true,
     toJSON: { 
@@ -127,6 +155,7 @@ const userSchema = new Schema({
 userSchema.index({ role: 1 });
 userSchema.index({ status: 1 });
 userSchema.index({ createdAt: -1 });
+userSchema.index({ 'oauthProviders.provider': 1, 'oauthProviders.providerId': 1 });
 
 // Virtual for full name
 userSchema.virtual('fullName').get(function() {

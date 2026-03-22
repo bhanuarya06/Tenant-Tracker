@@ -34,7 +34,6 @@ const paymentSchema = new Schema({
     },
     transactionId: {
         type: String,
-        sparse: true // Allows multiple null values
     },
     checkNumber: {
         type: String,
